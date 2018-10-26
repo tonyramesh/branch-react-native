@@ -12,7 +12,7 @@ const defaultBUO = {
 class BranchMethods extends Component {
 
   buo = null
-
+  _unsubscribeFromBranch = null
   state = {
     results: [],
   }
@@ -20,7 +20,23 @@ class BranchMethods extends Component {
   componentWillUnmount() {
     if (!this.buo) return
     this.buo.release()
+  } 
+
+  componentDidMount() { 
+    let key = {
+      "liveKey": "key_live_jnFOgSy0CLIEbPhiS980ccdoxznE8aou",
+      "testKey": "key_test_epyPpLw3zPQqdHklHXY5jfmkAyat5cbm"
+    };
+    this._unsubscribeFromBranch = branch.subscribe(key, ({ error, params }) => {
+      if (error) {
+        console.error("Error from Branch: " + error)
+        return
+      }
+      console.log("Branch params: " + JSON.stringify(params))
+      if (!params['+clicked_branch_link']) return
+    })
   }
+
 
   createBranchUniversalObject = async () => {
     try {
@@ -77,12 +93,12 @@ class BranchMethods extends Component {
       console.log('redeemRewards', result)
       this.addResult('success', 'redeemRewards', result)
     } catch (err) {
-      console.log('redeemRewards err', {...err}, err.message, err.toString())
+      console.log('redeemRewards err', { ...err }, err.message, err.toString())
       this.addResult('error', 'redeemRewards', err.toString())
     }
   }
 
-  loadRewards = async() => {
+  loadRewards = async () => {
     try {
       let result = await branch.loadRewards()
       console.log('loadRewards', result)
@@ -93,7 +109,7 @@ class BranchMethods extends Component {
     }
   }
 
-  getCreditHistory = async() => {
+  getCreditHistory = async () => {
     try {
       let result = await branch.getCreditHistory()
       console.log('getCreditHistory', result)
@@ -104,7 +120,7 @@ class BranchMethods extends Component {
     }
   }
 
-  userCompletedAction = async() => {
+  userCompletedAction = async () => {
     if (!this.buo) await this.createBranchUniversalObject()
     try {
       let result = await this.buo.userCompletedAction(RegisterViewEvent)
@@ -116,9 +132,9 @@ class BranchMethods extends Component {
     }
   }
 
-  sendCommerceEvent = async() => {
+  sendCommerceEvent = async () => {
     try {
-      let result = await branch.sendCommerceEvent(20.00, {"key": "value"})
+      let result = await branch.sendCommerceEvent(20.00, { "key": "value" })
 
       console.log('sendCommerceEvent', result)
       this.addResult('success', 'sendCommerceEvent', result)

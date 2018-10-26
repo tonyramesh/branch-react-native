@@ -27,7 +27,7 @@
             </intent-filter>
         </receiver>
         <!-- Branch keys -->
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_jnFOgSy0CLIEbPhiS980ccdoxznE8aou"/>
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_epyPpLw3zPQqdHklHXY5jfmkAyat5cbm"/>
+        <meta-data android:name="io.branch.sdk.BranchKey" android:value=""/>
+        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value=""/>
     </application>
 </manifest>

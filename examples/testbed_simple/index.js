@@ -4,4 +4,4 @@ import App from './src/App'
 
 AppRegistry.registerComponent('testbed_simple', () => App)
 
-require('./src/Subscribe')
+// require('./src/Subscribe')
